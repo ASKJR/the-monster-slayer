@@ -15,6 +15,7 @@
             <div
               class="healthbar text-center"
               style="background-color: green; margin: 0; color: white;"
+              :style="{width: userLife + '%'}"
             >
               {{ userLife }}
             </div>
@@ -26,6 +27,7 @@
             <div
               class="healthbar text-center"
               style="background-color: green; margin: 0; color: white;"
+              :style="{width: monsterLife + '%'}"
             >
               {{ monsterLife }}
             </div>
@@ -41,16 +43,25 @@
       </section>
       <section class="row controls" v-if="running">
         <div class="small-12 columns">
-          <button id="attack">ATTACK</button>
+          <button id="attack" @click="attack()">ATTACK</button>
           <button id="special-attack">SPECIAL ATTACK</button>
-          <button id="heal">HEAL</button>
+          <button id="heal" @click="heal()">HEAL</button>
           <button id="give-up">GIVE UP</button>
         </div>
       </section>
-      <section class="row log" v-if="hasLogs">
+      <section class="row log" v-if="logs.length > 0">
         <div class="small-12 columns">
           <ul>
-            <li></li>
+            <li
+              v-for="log in logs"
+              v-if="log.type == 'user'"
+              :class="{'player-turn': true}"
+            >
+              {{ log.msg }}
+            </li>
+            <li v-else :class="{'monster-turn': true}">
+              {{ log.msg}}
+            </li>
           </ul>
         </div>
       </section>
