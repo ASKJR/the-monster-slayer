@@ -36,7 +36,7 @@
       </section>
       <section class="row controls" v-if="!running">
         <div class="small-12 columns">
-          <button id="start-game" @click="running = true">
+          <button id="start-game" @click="newGame()">
             START NEW GAME
           </button>
         </div>
@@ -48,7 +48,7 @@
             SPECIAL ATTACK
           </button>
           <button id="heal" @click="heal()">HEAL</button>
-          <button id="give-up">GIVE UP</button>
+          <button id="give-up" @click="running = false">GIVE UP</button>
         </div>
       </section>
       <section class="row log" v-if="logs.length > 0">

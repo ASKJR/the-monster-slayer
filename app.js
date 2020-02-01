@@ -9,6 +9,12 @@ new Vue({
     logs: []
   },
   methods: {
+    newGame: function() {
+      this.running = true;
+      this.userLife = 100;
+      this.monsterLife = 100;
+      this.logs = [];
+    },
     attack: function(special = false) {
       this.userAtk = special ? this.damage() * 4 : this.damage();
       this.monsterAtk = this.damage();
