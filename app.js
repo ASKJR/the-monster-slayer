@@ -9,20 +9,31 @@ new Vue({
     logs: []
   },
   methods: {
-    attack: function() {
-      this.userAtk = this.damage();
+    attack: function(special = false) {
+      this.userAtk = special ? this.damage() * 4 : this.damage();
       this.monsterAtk = this.damage();
-      this.userLife -= this.monsterAtk;
-      this.monsterLife -= this.userAtk;
+      this.decreaseUserLife();
+      this.decreaseMonsterLife();
       this.writeLog("attack");
     },
     heal: function() {
       if (this.userLife < 100) {
         this.userLife += 10;
+        if (this.userLife > 100) {
+          this.userLife = 100;
+        }
         this.monsterAtk = this.damage();
-        this.userLife -= this.monsterAtk;
+        this.decreaseUserLife();
         this.writeLog("heal");
       }
+    },
+    decreaseUserLife: function() {
+      this.userLife -=
+        this.userLife - this.monsterAtk <= 0 ? this.userLife : this.monsterAtk;
+    },
+    decreaseMonsterLife: function() {
+      this.monsterLife -=
+        this.monsterLife - this.userAtk <= 0 ? this.monsterLife : this.userAtk;
     },
     damage: function() {
       return Math.floor(Math.random() * 20);
