@@ -66,6 +66,32 @@ new Vue({
 
       this.logs.unshift(userLog);
       this.logs.unshift(monsterLog);
+    },
+    endGame: function(msg) {
+      if (confirm(`${msg} New Game?`)) {
+        this.newGame();
+      } else {
+        this.running = false;
+      }
+    }
+  },
+  watch: {
+    monsterLife: function() {
+      let msg = "";
+      if (this.monsterLife == 0 && this.userLife > 0) {
+        msg = "You Win!";
+        this.endGame(msg);
+      }
+
+      if (this.userLife == 0 && this.monsterLife > 0) {
+        msg = "You Lost!";
+        this.endGame(msg);
+      }
+
+      if (this.userLife == 0 && this.monsterLife == 0) {
+        msg = "It's a draw!";
+        this.endGame(msg);
+      }
     }
   }
 });
